@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Runs commands in .\Tasks\[TASK]\Init[INSTANCE] with the environment configured and output logging.
+    Runs commands in .\Tasks\[TASK]\Init-[INSTANCE] with the environment configured and output logging.
 #>
 param (
     [string]$Task,
@@ -18,6 +18,7 @@ if ($Config['TranscriptEnabled'] -eq $true) {
         New-Item -Path $Config['LogDirectory'] -ItemType Directory | Out-Null
     }
 
+    $Config['_Task'] = $Task
     $Config['TaskTranscriptFile'] = $Config['TranscriptFileTemplate'] -f $Config['LogDirectory'], (Get-Date), $Task, $Instance
     
     # If one already exists, start with a clean transcript file.
